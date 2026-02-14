@@ -21,19 +21,18 @@ overflow:hidden;
 color:white;
 text-align:center;
 
-
-/* Fixed image scaling */
+/* Adjusted image position */
 background-image: url('photo1.png');
-background-size: contain;        /* shows full image */
-background-position: center 10%; 
+background-size: contain;
+background-position: center 8%;   /* moved image slightly up */
 background-repeat: no-repeat;
-background-color: black;         /* fills empty space */
+background-color: black;
 }
 
 /* Dark Overlay Box */
 .overlay{
 position:absolute;
-top:50%;
+top:70%;               /* moved box 20% down */
 left:50%;
 transform:translate(-50%,-50%);
 background:rgba(0,0,0,0.55);
@@ -209,7 +208,3 @@ ctx.fill();
 
 </body>
 </html>
-
-
-
-
