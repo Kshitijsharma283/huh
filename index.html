@@ -2,48 +2,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Love ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Arial',sans-serif;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: Arial, sans-serif;
+}
 
+/* Background Image */
 body{
+height:100vh;
+width:100vw;
 overflow:hidden;
 color:white;
 text-align:center;
+
+background-image: url('photo1.png');
+background-size: cover;
+background-position: center center;
+background-repeat: no-repeat;
+background-attachment: fixed;
 }
 
-/* Slideshow */
-.slideshow img{
-position:fixed;
-width:100%;
-height:100%;
-object-fit:cover;
-opacity:0;
-animation:fade 20s infinite;
-z-index:-2;
-}
-
-.slideshow img:nth-child(1){animation-delay:0s;}
-.slideshow img:nth-child(2){animation-delay:5s;}
-.slideshow img:nth-child(3){animation-delay:10s;}
-.slideshow img:nth-child(4){animation-delay:15s;}
-
-@keyframes fade{
-0%{opacity:0;}
-5%{opacity:1;}
-25%{opacity:1;}
-30%{opacity:0;}
-100%{opacity:0;}
-}
-
-/* Overlay */
+/* Dark Overlay Box */
 .overlay{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.55);
+backdrop-filter: blur(6px);
 padding:30px;
 border-radius:20px;
 width:90%;
@@ -58,12 +50,25 @@ border:none;
 border-radius:10px;
 font-size:16px;
 cursor:pointer;
+transition:0.3s;
 }
 
-#yes{background:#ff4d6d;color:white;}
-#no{background:gray;color:white;position:absolute;}
+#yes{
+background:#ff4d6d;
+color:white;
+}
 
-/* Hearts */
+#yes:hover{
+transform:scale(1.1);
+}
+
+#no{
+background:gray;
+color:white;
+position:absolute;
+}
+
+/* Floating Hearts */
 .heart{
 position:fixed;
 color:pink;
@@ -75,7 +80,7 @@ animation:floatUp 6s linear infinite;
 100%{transform:translateY(-10vh);opacity:0;}
 }
 
-/* Fireworks canvas */
+/* Fireworks Canvas */
 canvas{
 position:fixed;
 top:0;
@@ -90,7 +95,8 @@ z-index:-1;
 <!-- PASSWORD SCREEN -->
 <div id="passwordScreen" class="overlay">
 <h2>Enter Secret Password 💌</h2>
-<input type="password" id="passwordInput" placeholder="Enter password" style="padding:10px;border-radius:8px;border:none;margin-top:10px;">
+<input type="password" id="passwordInput" placeholder="Enter password" 
+style="padding:10px;border-radius:8px;border:none;margin-top:10px;width:80%;">
 <br>
 <button onclick="checkPassword()">Unlock ❤️</button>
 <p id="error" style="color:red;margin-top:10px;"></p>
@@ -99,18 +105,11 @@ z-index:-1;
 <!-- MAIN CONTENT -->
 <div id="mainContent" style="display:none;">
 
-<div class="slideshow">
-<img src="photo1.png">
-<img src="photo2.jpg">
-<img src="photo3.jpg">
-<img src="photo4.jpg">
-</div>
-
 <div class="overlay">
-<h1>HER_NAME ❤️</h1>
+<h1>NIHAR SANDHU ❤️</h1>
 <h2>Will you be my Valentine<br>and go on a date with me this Monday? 💖</h2>
 
-<h3 id="countdown"></h3>
+<h3 id="countdown" style="margin-top:15px;"></h3>
 
 <button id="yes" onclick="sayYes()">Yes 💕</button>
 <button id="no" onmouseover="moveButton()">No 🙈</button>
@@ -127,7 +126,7 @@ z-index:-1;
 /* PASSWORD */
 function checkPassword(){
 var pass=document.getElementById("passwordInput").value;
-if(pass==="yourpassword"){
+if(pass==="kshitiya"){
 document.getElementById("passwordScreen").style.display="none";
 document.getElementById("mainContent").style.display="block";
 document.getElementById("bgMusic").play();
@@ -148,18 +147,25 @@ button.style.left=Math.random()*window.innerWidth+"px";
 /* COUNTDOWN */
 function startCountdown(){
 var target=new Date();
-target.setDate(target.getDate()+((1+7-target.getDay())%7)); // next Monday
+target.setDate(target.getDate()+((1+7-target.getDay())%7)); 
 target.setHours(0,0,0,0);
 
 setInterval(function(){
 var now=new Date();
 var diff=target-now;
+
+if(diff<=0){
+document.getElementById("countdown").innerHTML="It's Monday! ❤️";
+return;
+}
+
 var days=Math.floor(diff/(1000*60*60*24));
 var hours=Math.floor((diff/(1000*60*60))%24);
 var minutes=Math.floor((diff/1000/60)%60);
 var seconds=Math.floor((diff/1000)%60);
+
 document.getElementById("countdown").innerHTML=
-"Countdown to Monday: "+days+"d "+hours+"h "+minutes+"m "+seconds+"s";
+"Countdown: "+days+"d "+hours+"h "+minutes+"m "+seconds+"s";
 },1000);
 }
 
@@ -173,13 +179,14 @@ heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(Math.random()*20+20)+"px";
 document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),6000);
-},500);
+},600);
 }
 
 /* FIREWORKS */
 function sayYes(){
 startFireworks();
-document.body.innerHTML="<h1 style='padding-top:200px;font-size:40px;background:black;height:100vh;'>Yayyy HER_NAME! ❤️<br>Monday is ours ✨</h1>";
+document.body.innerHTML=
+"<h1 style='padding-top:200px;font-size:40px;background:black;height:100vh;'>Yayyy NIHAR MERI JAAN ❤️<br>Monday is ours ✨</h1>";
 }
 
 function startFireworks(){
@@ -187,7 +194,8 @@ var canvas=document.getElementById("fireworks");
 var ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-for(let i=0;i<100;i++){
+
+for(let i=0;i<150;i++){
 ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
 ctx.beginPath();
 ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,5,0,Math.PI*2);
